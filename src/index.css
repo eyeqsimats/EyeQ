@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme inline {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+  @keyframes ripple {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  scroll-behavior: auto;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Progress bar */
+[data-progress] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+  transform-origin: left;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Nav scrolled state */
+nav[data-scrolled] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Back to top */
+[data-back-to-top] {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+[data-back-to-top]:hover {
+  transform: translateY(-2px);
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Smooth scrolling animations */
+.scroll-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax effect */
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Hover animations */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Staggered animations */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stagger-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 3%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 85%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 0% 75%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 80%;
+
+    --radius: 0.75rem;
+
+    /* Custom grey shades */
+    --grey-dark: 0 0% 10%;
+    --grey-medium: 0 0% 40%;
+    --grey-light: 0 0% 70%;
+  }
+  .theme {
+    --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Fix for word wrapping issue in AlternatingText component */
+.alt-letter {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  -webkit-hyphens: none !important;
+  -moz-hyphens: none !important;
+  -ms-hyphens: none !important;
+  hyphens: none !important;
+}
+
+.alternating-text-container {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  line-height: 1.2;
+}
+body {
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 1);
+}
+
+/* Animated Navbar Buttons */
+.nav-animated-button {
+  --nav-primary: #000000;
+  --nav-text: #ffffff;
+  --nav-radius: 14px;
+
+  cursor: pointer;
+  border-radius: var(--nav-radius);
+  text-shadow: none;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  padding: 14px 20px;
+  height: 48px;
+  font-family: inherit;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  color: hsl(var(--foreground) / 0.8);
+}
+
+.nav-animated-button:hover {
+  transform: scale(1.02);
+  background: var(--nav-primary);
+  color: var(--nav-text);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+}
+
+.nav-animated-button:active {
+  transform: scale(1);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 10px 3px -3px rgba(0, 0, 0, 0.2);
+}
+
+.nav-animated-button:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--nav-radius);
+  border: 2.5px solid transparent;
+  background: transparent;
+  z-index: 0;
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
+.nav-animated-button:hover::after {
+  opacity: 1;
+  background: linear-gradient(#1a1a1a, #0a0a0a) padding-box,
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) border-box;
+  transform: scale(1.05, 1.1);
+  box-shadow: inset 0 -1px 3px 0 rgba(255, 255, 255, 0.3);
+}
+
+.nav-animated-button::before {
+  content: "";
+  inset: 7px 6px 6px 6px;
+  position: absolute;
+  background: transparent;
+  border-radius: 30px;
+  filter: blur(0.5px);
+  z-index: 2;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.nav-animated-button:hover::before {
+  opacity: 1;
+  background: linear-gradient(to top, #0a0a0a, #1a1a1a);
+}
+
+.nav-button-content {
+  z-index: 2;
+  display: flex;
+  position: relative;
+}
+
+.nav-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+/* Outline */
+.nav-outline {
+  position: absolute;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  inset: -2px -3.5px;
+}
+
+.nav-outline::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 180deg,
+    transparent 60%,
+    white 80%,
+    transparent 100%
+  );
+  animation: nav-spin 2s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes nav-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.nav-animated-button:hover .nav-outline {
+  opacity: 1;
+}
+
+.nav-animated-button:hover .nav-outline::before {
+  animation-play-state: running;
+}
+
+/* Letters Animation */
+.nav-text span {
+  display: block;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.nav-animated-button:hover .nav-text span {
+  opacity: 1;
+  animation: nav-wave 0.5s ease forwards calc(var(--i) * 0.02s);
+}
+
+@keyframes nav-wave {
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+    color: #ffffff;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+
+@keyframes nav-slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateX(5px) rotate(-90deg);
+    filter: blur(5px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
